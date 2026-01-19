@@ -336,7 +336,7 @@
     },
     {
       "parameters": {
-        "content": "# Newsletter Automation\n",
+        "content": "# Newsletter Automation\n\nAI-powered newsletter creation from topic to delivery.\n\n## How It Works\n1. Submit topic, tone, and audience via form\n2. AI plans table of contents\n3. Research team writes each section\n4. Editor compiles final newsletter\n5. Send via Gmail\n\n## Required Credentials\n- OpenAI API\n- Anthropic API\n- Tavily API (for research)\n- Gmail OAuth",
         "height": 740,
         "width": 2840,
         "color": 5
@@ -352,7 +352,7 @@
     },
     {
       "parameters": {
-        "content": "# Tavily Tool",
+        "content": "# Tavily Tool\n\nWeb research sub-workflow. Add your Tavily API key to the HTTP node.",
         "height": 300,
         "width": 700,
         "color": 4
@@ -384,7 +384,7 @@
     },
     {
       "parameters": {
-        "content": "# Newsletter Workflow",
+        "content": "# Newsletter Workflow\n\nGenerate researched newsletters automatically from any topic.",
         "height": 80,
         "width": 500
       },

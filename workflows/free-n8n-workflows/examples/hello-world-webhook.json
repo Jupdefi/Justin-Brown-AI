@@ -3,6 +3,17 @@
   "nodes": [
     {
       "parameters": {
+        "content": "# Hello World Webhook\n\nA simple starter workflow for learning n8n basics.\n\n## How It Works\n1. **Webhook** - Receives HTTP GET requests at `/hello-world`\n2. **Set Response** - Creates a greeting message with timestamp\n3. **Respond** - Returns JSON response to the caller\n\n## Quick Start\n1. Activate this workflow\n2. Copy the webhook URL\n3. Open in browser or use: `curl YOUR_URL`\n\n## Expected Response\n```json\n{\n  \"message\": \"Hello from n8n!\",\n  \"timestamp\": \"2025-01-19T12:00:00Z\"\n}\n```",
+        "height": 420,
+        "width": 400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-150, 180],
+      "name": "Setup Guide"
+    },
+    {
+      "parameters": {
         "httpMethod": "GET",
         "path": "hello-world",
         "responseMode": "onReceived",

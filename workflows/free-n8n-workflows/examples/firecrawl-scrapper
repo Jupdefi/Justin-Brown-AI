@@ -9,7 +9,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "{\n  \"query\": \"nate herk site:www.geeky-gadgets.com\",\n  \"limit\": 5\n}",
+        "jsonBody": "{\n  \"query\": \"AI automation site:www.geeky-gadgets.com\",\n  \"limit\": 5\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -29,7 +29,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "{\n  \"query\": \"nate herk inurl:skool\",\n  \"limit\": 5\n}",
+        "jsonBody": "{\n  \"query\": \"n8n automation inurl:tutorial\",\n  \"limit\": 5\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -49,7 +49,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "{\n  \"query\": \"nate herk -inurl:skool\",\n  \"limit\": 6\n}",
+        "jsonBody": "{\n  \"query\": \"workflow automation -site:linkedin.com\",\n  \"limit\": 6\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -178,7 +178,7 @@
     },
     {
       "parameters": {
-        "content": "# 🚀 Quick Setup Guide\nStart using the Firecrawl `/search` endpoint to pull relevant, structured data from across the web — perfect for AI Agents, lead scraping, research, and more.\n\n🔗 **API Documentation:**  \n[FireCrawl Search Endpoint →](https://docs.firecrawl.dev/api-reference/endpoint/search)\n\n",
+        "content": "# 🚀 Firecrawl Search Agent\n\nPowerful web search with AI query optimization.\n\n## Quick Setup\n1. Get API key at [firecrawl.dev](https://firecrawl.dev)\n2. Add HTTP Header Auth: `Authorization: Bearer YOUR_KEY`\n3. Add OpenRouter credentials\n4. Activate and start searching!\n\n## How to Use\nJust describe what you want to find:\n- \"Find YouTube tutorials about n8n\"\n- \"Search for AI startups, exclude LinkedIn\"\n\n🔗 [API Docs](https://docs.firecrawl.dev/api-reference/endpoint/search)",
         "height": 340,
         "width": 680
       },
@@ -256,7 +256,7 @@
     },
     {
       "parameters": {
-        "content": "## Firecrawl Agent",
+        "content": "## Firecrawl Agent\n\nThe AI converts your natural language into optimized search queries.",
         "height": 340,
         "width": 700,
         "color": 6
