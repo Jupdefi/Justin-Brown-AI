@@ -37,7 +37,7 @@
             {
               "id": "f4b8c16e-6788-4c17-b643-94a3f0620860",
               "name": "Workflow Link",
-              "value": "=https://nateherk.app.n8n.cloud/workflow/{{ $json.id }}",
+              "value": "=https://your-n8n-instance.app.n8n.cloud/workflow/{{ $json.id }}",
               "type": "string"
             }
           ]

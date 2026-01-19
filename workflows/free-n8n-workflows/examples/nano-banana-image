@@ -767,7 +767,7 @@
     },
     {
       "parameters": {
-        "content": "# 🛠️ Setup Guide  \n**Author:** [Nate Herk](https://www.youtube.com/@nateherk)\n\nFollow these steps to get the workflow up and running:\n\n### ✅ Step 1: Get Your [KIE API Key](https://kie.ai)  \nHead to [kie.ai](https://kie.ai) and grab your API key. Then, plug this key into all HTTP Request nodes that point to **kie.ai**.\n\n### ✅ Step 2: Get Your [IMGBB API Key](https://imgbb.com/)  \nVisit [imgbb.com](https://imgbb.com/) to generate your API key. Add this key to the HTTP Request that hits the Git image URL endpoint.\n\n### 🎯 Final Step: Experiment & Refine  \nStart testing different prompts and images. Adjust inputs and refine based on results until you're happy with the workflow's output.\n",
+        "content": "# 🛠️ Setup Guide  \n\nFollow these steps to get the workflow up and running:\n\n### ✅ Step 1: Get Your [KIE API Key](https://kie.ai)  \nHead to [kie.ai](https://kie.ai) and grab your API key. Then, plug this key into all HTTP Request nodes that point to **kie.ai**.\n\n### ✅ Step 2: Get Your [IMGBB API Key](https://imgbb.com/)  \nVisit [imgbb.com](https://imgbb.com/) to generate your API key. Add this key to the HTTP Request that hits the Git image URL endpoint.\n\n### 🎯 Final Step: Experiment & Refine  \nStart testing different prompts and images. Adjust inputs and refine based on results until you're happy with the workflow's output.\n",
         "height": 464,
         "width": 608
       },
