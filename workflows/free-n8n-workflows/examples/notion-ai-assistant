@@ -1,0 +1,743 @@
+{
+  "name": "Notion AI Assistant Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# Generate new workflow version for specific notion db schema\nInput a Notion database URL and get an AI Assistant chatbot workflow for it based on this template: https://n8n.io/workflows/2413-notion-knowledge-base-ai-assistant/\n\nProject in notion: https://www.notion.so/n8n/Chat-with-notion-database-84eec91b74dd4e36ba97edda17c2c306",
+        "height": 231.27721611949534,
+        "width": 616.7964812508943,
+        "color": 7
+      },
+      "id": "67f95574-b38b-4424-8d28-a7ba7263eac1",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3168,
+        192
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "database",
+        "databaseId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "={{ $json.chatInput.match(/https?:\\/\\/[^\\s/$.?#].[^\\s]*/g)[0] }}"
+        },
+        "simple": false
+      },
+      "id": "9cab6b23-d958-4110-b62c-6541ad119b99",
+      "name": "Notion",
+      "type": "n8n-nodes-base.notion",
+      "position": [
+        -2256,
+        432
+      ],
+      "typeVersion": 2.2,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bebcb43c-461d-40d7-af83-436d94733622",
+              "name": "output",
+              "type": "string",
+              "value": "=Created workflow:\n```\n{{ $json.generatedWorkflow }}\n```\n\n☝️ Copy and paste JSON above into an n8n workflow canvas (on v 1.52.0+)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ab8ae900-cae3-4535-9a68-4b817eacff92",
+      "name": "Return success to chat",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        0,
+        688
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d5838f77-b059-4fa0-85e6-ae3a413c3447",
+      "name": "Auto-fixing Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "position": [
+        -1200,
+        592
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxTokensToSample": 8192,
+          "temperature": 0.7
+        }
+      },
+      "id": "5feb7264-1aa2-44b8-9ed7-87ef49915d26",
+      "name": "Anthropic Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "position": [
+        -1440,
+        592
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f82e26dd-f5c5-43b5-b97d-ee63c3ef124e",
+              "name": "searchNotionDBJsonBody",
+              "type": "string",
+              "value": "={{ $json.output.output.workflowJson.parseJson().nodes.find(node => node.name === \"Search notion database\").parameters.jsonBody }}"
+            },
+            {
+              "id": "a804139b-8bf0-43dc-aa8c-9c0dcb387392",
+              "name": "generatedWorkflow",
+              "type": "string",
+              "value": "={{ $json.output.output.workflowJson }}"
+            },
+            {
+              "id": "1e24fdfe-c31f-43e3-bca2-7124352fd62e",
+              "name": "inputDatabase",
+              "type": "object",
+              "value": "={{ $('Set input data').first().json.inputDatabase }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "48eff97f-514f-4df4-adac-db8c1c8fa417",
+      "name": "Set schema for eval",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -816,
+        384
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b561b640-7fcb-4613-8b66-068dbd115b4e",
+              "name": "sessionId",
+              "type": "string",
+              "value": "={{ $('When chat message received').item.json.sessionId }}"
+            },
+            {
+              "id": "74d91d28-b73a-4341-a037-693468120d2d",
+              "name": "output",
+              "type": "string",
+              "value": "Sorry that doesn't look like a valid notion database url. Try again."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fb8616cf-8fac-4637-ab7c-3a666d259fbe",
+      "name": "Return error to chat",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -2048,
+        608
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxTokensToSample": 8192
+        }
+      },
+      "id": "e9005f5d-3869-4a18-b1ba-9e0ab49ef981",
+      "name": "Anthropic Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "position": [
+        -1248,
+        752
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8fc7df86-4a47-43ec-baea-f9ee87a899a8",
+              "name": "inputDatabase.id",
+              "type": "string",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "id": "fdeb5b1b-0bf3-46d6-a266-7f85e212a427",
+              "name": "inputDatabase.url",
+              "type": "string",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "id": "b2b06176-b4df-41bd-9422-9c89726fa3fd",
+              "name": "inputDatabase.public_url",
+              "type": "string",
+              "value": "={{ $json.public_url }}"
+            },
+            {
+              "id": "c7b65a70-8af6-4808-aae9-898df9b10340",
+              "name": "inputDatabase.name",
+              "type": "string",
+              "value": "={{ $json.title[0].text.content }}"
+            },
+            {
+              "id": "87c1be85-e180-487b-9c82-61c87c7c460b",
+              "name": "inputDatabase.properties",
+              "type": "object",
+              "value": "={{ $json.properties }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c9c0d38e-e08c-4aa6-83f0-cd77c51029f7",
+      "name": "standardize schema",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -2048,
+        384
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop through each incoming item\nreturn items.map(item => {\n  const inputDatabase = item.json[\"inputDatabase\"];\n\n  const simplifiedProperties = Object.fromEntries(Object.entries(inputDatabase.properties).map(([key, value]) => {\n    const simplifiedValue = {\n      id: value.id,\n      name: value.name,\n      type: value.type\n    };\n\n    // Simplify based on type\n    if (value.type === 'multi_select' || value.type === 'select') {\n      simplifiedValue.options = value.multi_select?.options?.map(option => option.name) || [];\n    }\n    \n    return [key, simplifiedValue];\n  }));\n\n  // Overwrite the properties object with simplifiedProperties\n  item.json.inputDatabase.properties = simplifiedProperties;\n\n  return item;  // Return the modified item\n});\n"
+      },
+      "id": "ba4384d1-fcd7-4fd0-b017-1901a179f3b8",
+      "name": "Simplify properties object",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -1824,
+        384
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"workflowJson\": \"json of workflow\"\n}"
+      },
+      "id": "c2cc46cb-5bd1-4642-81af-3017af4d8d07",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        -1040,
+        752
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "jsCode": "\nreturn [{\n  json: {\n    inputDatabase: $input.first().json.inputDatabase,\n    feedbackPrompt: (typeof yourVariable !== 'undefined' && yourVariable) ? yourVariable : \" \",\n    workflowTemplate: {\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"model\": \"gpt-4o\",\n        \"options\": {\n          \"temperature\": 0.7,\n          \"timeout\": 25000\n        }\n      },\n      \"id\": \"f262c0b4-d627-4fd4-ad78-0aa2f57d963f\",\n      \"name\": \"OpenAI Chat Model\",\n      \"type\": \"@n8n/n8n-nodes-langchain.lmChatOpenAi\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1320,\n        640\n      ],\n      \"credentials\": {\n        \"openAiApi\": {\n          \"id\": \"AzPPV759YPBxJj3o\",\n          \"name\": \"Max's DevRel OpenAI account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"055e8a80-4aff-4466-aaa5-ac58bb90f2d0\",\n              \"name\": \"databaseName\",\n              \"value\": \"={{ $json.name }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"2a61e473-72e7-46f6-98b0-817508d701c7\",\n              \"name\": \"databaseId\",\n              \"value\": \"={{ $json.id }}\",\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"fb74819f-660e-479c-9519-73cfc41c7ee0\",\n      \"name\": \"workflow vars\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        940,\n        460\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"a8e58791-ba51-46a2-8645-386dd1a0ff6e\",\n              \"name\": \"sessionId\",\n              \"value\": \"={{ $('When chat message received').item.json.sessionId }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"434209de-39d5-43d8-a964-0fcb7396306c\",\n              \"name\": \"action\",\n              \"value\": \"={{ $('When chat message received').item.json.action }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"cad4c972-51a9-4e16-a627-b00eea77eb30\",\n              \"name\": \"chatInput\",\n              \"value\": \"={{ $('When chat message received').item.json.chatInput }}\",\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"832ec8ce-0f7c-4380-9a24-633f490a60a9\",\n      \"name\": \"format input for agent\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        1160,\n        460\n      ]\n    },\n    {\n      \"parameters\": {\n        \"toolDescription\": \"=Use this tool to search the \\\"{{ $('workflow vars').item.json.databaseName }}\\\" Notion app database.\\n\\nIt is structured with question and answer format. \\nYou can filter query result by:\\n- By keyword\\n- filter by tag.\\n\\nKeyword and Tag have an OR relationship not AND.\\n\\n\",\n        \"method\": \"POST\",\n        \"url\": \"https://api.notion.com/v1/databases/7ea9697d-4875-441e-b262-1105337d232e/query\",\n        \"authentication\": \"predefinedCredentialType\",\n        \"nodeCredentialType\": \"notionApi\",\n        \"sendBody\": true,\n        \"specifyBody\": \"json\",\n        \"jsonBody\": \"{\\n  \\\"filter\\\": {\\n    \\\"or\\\": [\\n      {\\n        \\\"property\\\": \\\"question\\\",\\n        \\\"rich_text\\\": {\\n          \\\"contains\\\": \\\"{keyword}\\\"\\n        }\\n      },\\n      {\\n        \\\"property\\\": \\\"tags\\\",\\n        \\\"multi_select\\\": {\\n          \\\"contains\\\": \\\"{tag}\\\"\\n        }\\n      }\\n    ]\\n  },\\n  \\\"sorts\\\": [\\n    {\\n      \\\"property\\\": \\\"updated_at\\\",\\n      \\\"direction\\\": \\\"ascending\\\"\\n    }\\n  ]\\n}\",\n        \"placeholderDefinitions\": {\n          \"values\": [\n            {\n              \"name\": \"keyword\",\n              \"description\": \"Searches question of the record. Use one keyword at a time.\"\n            },\n            {\n              \"name\": \"tag\",\n              \"description\": \"Options: PTO, HR Policy, Health Benefits, Direct Deposit, Payroll, Sick Leave, 1:1 Meetings, Scheduling, Internal Jobs, Performance Review, Diversity, Inclusion, Training, Harassment, Discrimination, Product Roadmap, Development, Feature Request, Product Management, Support, Ticket Submission, Password Reset, Email, Slack, GitHub, Team Collaboration, Development Setup, DevOps, GitHub Profile Analyzer, Security Breach, Incident Report, New Software, Software Request, IT, Hardware, Procurement, Software Licenses, JetBrains, Adobe, Data Backup, IT Policy, Security, MFA, Okta, Device Policy, Support Ticket, Phishing, Office Supplies, Operations, Meeting Room, Berlin Office, Travel Expenses, Reimbursement, Facilities, Maintenance, Equipment, Expense Reimbursement, Mobile Phones, SIM Cards, Parking, OKRs, Dashboard, Catering, Office Events\"\n            }\n          ]\n        }\n      },\n      \"id\": \"f16acb7e-f27d-4a95-845c-c990fc334795\",\n      \"name\": \"Search notion database\",\n      \"type\": \"@n8n/n8n-nodes-langchain.toolHttpRequest\",\n      \"typeVersion\": 1.1,\n      \"position\": [\n        1620,\n        640\n      ],\n      \"credentials\": {\n        \"notionApi\": {\n          \"id\": \"gfNp6Jup8rsmFLRr\",\n          \"name\": \"max-bot\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"public\": true,\n        \"initialMessages\": \"=Happy {{ $today.weekdayLong }}!\\nKnowledge source assistant at your service. How can I help?\",\n        \"options\": {\n          \"subtitle\": \"\",\n          \"title\": \"Notion Knowledge Base\"\n        }\n      },\n      \"id\": \"9fc1ae38-d115-44d0-a088-7cec7036be6f\",\n      \"name\": \"When chat message received\",\n      \"type\": \"@n8n/n8n-nodes-langchain.chatTrigger\",\n      \"typeVersion\": 1.1,\n      \"position\": [\n        560,\n        460\n      ],\n      \"webhookId\": \"b76d02c0-b406-4d21-b6bf-8ad2c623def3\"\n    },\n    {\n      \"parameters\": {\n        \"resource\": \"database\",\n        \"databaseId\": {\n          \"__rl\": true,\n          \"value\": \"7ea9697d-4875-441e-b262-1105337d232e\",\n          \"mode\": \"list\",\n          \"cachedResultName\": \"StarLens Company Knowledge Base\",\n          \"cachedResultUrl\": \"https://www.notion.so/7ea9697d4875441eb2621105337d232e\"\n        }\n      },\n      \"id\": \"9325e0fe-549f-423b-af48-85e802429a7f\",\n      \"name\": \"Get database details\",\n      \"type\": \"n8n-nodes-base.notion\",\n      \"typeVersion\": 2.2,\n      \"position\": [\n        760,\n        460\n      ],\n      \"credentials\": {\n        \"notionApi\": {\n          \"id\": \"gfNp6Jup8rsmFLRr\",\n          \"name\": \"max-bot\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"contextWindowLength\": 4\n      },\n      \"id\": \"637f5731-4442-42be-9151-30ee29ad97c6\",\n      \"name\": \"Window Buffer Memory\",\n      \"type\": \"@n8n/n8n-nodes-langchain.memoryBufferWindow\",\n      \"typeVersion\": 1.2,\n      \"position\": [\n        1460,\n        640\n      ]\n    },\n    {\n      \"parameters\": {\n        \"toolDescription\": \"=Use this tool to retrieve Notion page content using the page ID. \\n\\nIt is structured with question and answer format. \\nYou can filter query result by:\\n- By keyword\\n- filter by tag.\\n\\nKeyword and Tag have an OR relationship not AND.\\n\\n\",\n        \"url\": \"https://api.notion.com/v1/blocks/{page_id}/children\",\n        \"authentication\": \"predefinedCredentialType\",\n        \"nodeCredentialType\": \"notionApi\",\n        \"placeholderDefinitions\": {\n          \"values\": [\n            {\n              \"name\": \"page_id\",\n              \"description\": \"Notion page id from 'Search notion database' tool results\"\n            }\n          ]\n        },\n        \"optimizeResponse\": true,\n        \"dataField\": \"results\",\n        \"fieldsToInclude\": \"selected\",\n        \"fields\": \"id, type, paragraph.text, heading_1.text, heading_2.text, heading_3.text, bulleted_list_item.text, numbered_list_item.text, to_do.text, children\"\n      },\n      \"id\": \"6b87ae47-fac9-4ef5-aa9a-f1a1ae1adc5f\",\n      \"name\": \"Search inside database record\",\n      \"type\": \"@n8n/n8n-nodes-langchain.toolHttpRequest\",\n      \"typeVersion\": 1.1,\n      \"position\": [\n        1800,\n        640\n      ],\n      \"credentials\": {\n        \"notionApi\": {\n          \"id\": \"gfNp6Jup8rsmFLRr\",\n          \"name\": \"max-bot\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"promptType\": \"define\",\n        \"text\": \"={{ $json.chatInput }}\",\n        \"options\": {\n          \"systemMessage\": \"=# Role:\\nYou are a helpful agent. Query the \\\"{{ $('workflow vars').item.json.databaseName }}\\\" Notion database to find relevant records or provide insights based on multiple records.\\n\\n# Behavior:\\n\\nBe clear, very concise, efficient, and accurate in responses. Do not hallucinate.\\nIf the request is ambiguous, ask for clarification. Do not embellish, only use facts from the Notion records. Never offer general advice.\\n\\n# Error Handling:\\n\\nIf no matching records are found, try alternative search criteria. Example: Laptop, then Computer, then Equipment. \\nClearly explain any issues with queries (e.g., missing fields or unsupported filters).\\n\\n# Output:\\n\\nReturn concise, user-friendly results or summaries.\\nFor large sets, show top results by default and offer more if needed. Output URLs in markdown format. \\n\\nWhen a record has the answer to user question, always output the URL to that page. Always list links to records separately at the end of the message like this:\\n\\\"Relevant pages: \\n(links in markdown format)\\\"\\nDo not output links twice, only in Relevant pages section\\n\"\n        }\n      },\n      \"id\": \"17f2c426-c48e-48e0-9c5e-e35bdafe5109\",\n      \"name\": \"AI Agent\",\n      \"type\": \"@n8n/n8n-nodes-langchain.agent\",\n      \"typeVersion\": 1.6,\n      \"position\": [\n        1380,\n        460\n      ]\n    }\n  ],\n  \"connections\": {\n    \"OpenAI Chat Model\": {\n      \"ai_languageModel\": [\n        [\n          {\n            \"node\": \"AI Agent\",\n            \"type\": \"ai_languageModel\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"workflow vars\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"format input for agent\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"format input for agent\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"AI Agent\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Search notion database\": {\n      \"ai_tool\": [\n        [\n          {\n            \"node\": \"AI Agent\",\n            \"type\": \"ai_tool\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"When chat message received\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Get database details\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Get database details\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"workflow vars\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Window Buffer Memory\": {\n      \"ai_memory\": [\n        [\n          {\n            \"node\": \"AI Agent\",\n            \"type\": \"ai_memory\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Search inside database record\": {\n      \"ai_tool\": [\n        [\n          {\n            \"node\": \"AI Agent\",\n            \"type\": \"ai_tool\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {}\n}\n  }\n}];"
+      },
+      "id": "177f5384-0008-4afb-92fd-31bf90a680ad",
+      "name": "Set input data",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -1568,
+        384
+      ],
+      "typeVersion": 2,
+      "notes": "This allows different routes to input into our agent (e.g. the retry branch). In the AI Agent, we can use a relative $json reference for data, since it's always the same input schema going in. "
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b4669a2c-7780-4c54-aef6-89a56ddf1d06",
+              "name": "inputDatabase",
+              "type": "object",
+              "value": "={{ $json.inputDatabase }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "da1db24c-f69e-4b1c-bb4e-16f05457fc19",
+      "name": "Set schem for rerun",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        0,
+        192
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## #1 Serve chat, get URL from user, pull new notion DB schema\nUses n8n Chat trigger. Notion node will fail if an invalid URL is used, or if n8n doesn't have access to it. Also attempts to strip non URL text input. Simplifies notion DB outputs for more efficient token usage in AI Agent.",
+        "height": 110.78786136085805,
+        "width": 747.234277816171,
+        "color": 7
+      },
+      "id": "5ba03bf4-ce6e-4179-8031-7d580506d25a",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2480,
+        192
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## #2 GenAI step\nTakes 2 inputs: [original workflow template](https://n8n.io/workflows/2413-notion-knowledge-base-ai-assistant/) and new Notion database details from #1",
+        "height": 114.20873484539783,
+        "width": 638.6509136143742,
+        "color": 7
+      },
+      "id": "c61af11c-b6fe-4a2e-991a-1a37a4de2f1e",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1600,
+        192
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## #3 Does the new workflow look right?\nChecks for previously identified cases (e.g. LLM outputs placeholder for certain values) then does general LLM check on whether it looks like valid n8n workflow JSON.",
+        "height": 111.9281525223713,
+        "width": 727.8599253628195,
+        "color": 7
+      },
+      "id": "d06a21e3-56ca-4a77-bac1-7893bb2deebc",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -880,
+        192
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1243a328-8420-4be0-8932-4e153472a638",
+              "name": "feedbackPrompt",
+              "type": "string",
+              "value": "=You attempted the below task and outputted incorrect JSON. Below is your incorrect attempt and original task prompt. Try again.\n\n# Incorrect task prompt\n"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "a145b01b-5319-48a8-9cfc-b76d34278c82",
+      "name": "Add feedback prompt",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -320,
+        384
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "leftValue": "={{ $json.searchNotionDBJsonBody }}",
+                    "rightValue": "object Object"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Placeholder jsonBody in tool"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "allMatchingOutputs": false
+        }
+      },
+      "id": "06b6015d-26be-4be1-9fdb-68224290fba8",
+      "name": "Check for WF JSON errors",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        -624,
+        384
+      ],
+      "typeVersion": 3.1,
+      "notes": "Placeholder jsonBody in tool - this means the 'Search notion database' tool got [object Object] as it's value (happening ~25% of the time)"
+    },
+    {
+      "parameters": {
+        "content": "## #4 Respond to Chat trigger\nEach response to the chat trigger is one run. Data of the last node that runs in the workflow is sent to chat trigger, like `Return success to chat`",
+        "height": 132.30907857627597,
+        "width": 343.3887397891673,
+        "color": 7
+      },
+      "id": "b33c4006-c257-4f1a-9bc9-e4252ab7e7c3",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "agent": "reActAgent",
+        "promptType": "define",
+        "text": "=Your task is to output a modified version of a n8n workflow template so it works with the provided new notion database schema. \n\n\n# new notion database details\n{{ $json.inputDatabase.toJsonString() }}\n\n# n8n workflow template to use as reference\n{{ $json.workflowTemplate.toJsonString() }}\n\nJSON Output:\n- Ensure valid JSON with properly quoted keys and values, no trailing commas, and correctly nested braces `{}` and brackets `[]`. If unable to format, return an error or a valid example.\n- Output linebreaks so user can copy working JSON",
+        "hasOutputParser": true,
+        "options": {
+          "prefix": "You are an n8n expert and understand n8n's workflow JSON Structure. You take n8n workflows and make changes to them based on the user request. \n\nDon't hallucinate. Only output n8n workflow json. \n\n",
+          "returnIntermediateSteps": false
+        }
+      },
+      "id": "34cd5522-cf76-42c8-a3b8-f95a0cb29d31",
+      "name": "Generate Workflow Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -1328,
+        384
+      ],
+      "typeVersion": 1.6,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxTokensToSample": 8192
+        }
+      },
+      "id": "84de77b1-b83a-41fe-89b0-bd153456b3ab",
+      "name": "Anthropic Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "position": [
+        -416,
+        800
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there, I can help you make an AI Agent assistant that can query a Notion database.\n\nGenerating the workflow may take a few minutes as I check whether it works and try again if I oopsie.\n\nEnter a notion database URL and I'll output the workflow in JSON that you can paste in to the n8n canvas. \n",
+        "options": {
+          "inputPlaceholder": "e.g. https://www.notion.so/n8n/34f67a14195344fda645691c63dc3901",
+          "loadPreviousSession": "manually",
+          "subtitle": "Generates an n8n workflow-based AI Agent that can query any arbitrary Notion database. ",
+          "title": "🤖 Notion database assistant generator"
+        }
+      },
+      "id": "7c583cc4-52c0-41eb-a7f3-148134c57714",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -2448,
+        432
+      ],
+      "webhookId": "49dfdc22-b4c8-4ed3-baef-6751ec52f278",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.generatedWorkflow }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "invalidJSON",
+              "description": "Any other workflow JSON"
+            },
+            {
+              "category": "validJSON",
+              "description": "A valid n8n workflow JSON"
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "You are an expert in n8n workflow automation tool. You know whether the json representation of an n8n workflow is valid. \n\nPlease classify the text provided by the user into one of the following categories: {categories}, and use the provided formatting instructions below. Don't explain, and only output the json."
+        }
+      },
+      "id": "9bcc88de-44d7-4378-b63e-4f70738cc340",
+      "name": "Valid n8n workflow JSON?",
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "position": [
+        -400,
+        640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Watch a quick set up video 👇\n[![Notion AI Assistant Generator](https://uploads.n8n.io/devrel/notion-db-assistant-thumb#full-width)](https://youtu.be/iK87ppcaNgM)\n",
+        "height": 416.2640726760381,
+        "width": 614.8565246662145,
+        "color": 7
+      },
+      "id": "6ed35e0f-2bfa-4fa0-adbc-7c21d9534c81",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3168,
+        448
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Notion": {
+      "main": [
+        [
+          {
+            "node": "standardize schema",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Return error to chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set input data": {
+      "main": [
+        [
+          {
+            "node": "Generate Workflow Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "standardize schema": {
+      "main": [
+        [
+          {
+            "node": "Simplify properties object",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add feedback prompt": {
+      "main": [
+        [
+          {
+            "node": "Set schem for rerun",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set schem for rerun": {
+      "main": [
+        [
+          {
+            "node": "Set input data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set schema for eval": {
+      "main": [
+        [
+          {
+            "node": "Check for WF JSON errors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate Workflow Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Valid n8n workflow JSON?",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Workflow Agent": {
+      "main": [
+        [
+          {
+            "node": "Set schema for eval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check for WF JSON errors": {
+      "main": [
+        [
+          {
+            "node": "Add feedback prompt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Valid n8n workflow JSON?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valid n8n workflow JSON?": {
+      "main": [
+        [
+          {
+            "node": "Set schem for rerun",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Return success to chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Generate Workflow Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simplify properties object": {
+      "main": [
+        [
+          {
+            "node": "Set input data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "81469d11-2c90-44e4-bd35-3c8513dfe29e",
+  "meta": {
+    "instanceId": "a8f82fabd6c506070258ba0e5756d77a89c1fbe32440ca12ebbacc2589274770"
+  },
+  "id": "jm5PNMGB693w06gb",
+  "tags": [
+    {
+      "updatedAt": "2026-01-17T10:20:05.208Z",
+      "createdAt": "2026-01-17T10:20:05.208Z",
+      "id": "tuW2ox8hlrKjYRiw",
+      "name": "agents"
+    },
+    {
+      "updatedAt": "2026-01-17T09:31:27.707Z",
+      "createdAt": "2026-01-17T09:31:27.707Z",
+      "id": "EKhWGJZPoAVjddEH",
+      "name": "notion"
+    },
+    {
+      "updatedAt": "2026-01-17T09:19:49.906Z",
+      "createdAt": "2026-01-17T09:19:49.906Z",
+      "id": "Idhwbw6NqF6tmzZQ",
+      "name": "free workflow"
+    }
+  ]
+}
