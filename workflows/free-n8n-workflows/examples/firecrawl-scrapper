@@ -1,0 +1,340 @@
+{
+  "name": "Firecrawl Search",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"query\": \"nate herk site:www.geeky-gadgets.com\",\n  \"limit\": 5\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1552,
+        432
+      ],
+      "id": "2ca6f984-4c3a-4a19-b0a2-54199a55971e",
+      "name": "Site"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"query\": \"nate herk inurl:skool\",\n  \"limit\": 5\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1552,
+        640
+      ],
+      "id": "50f7aaa4-0a87-42d6-9288-32ebbf27b209",
+      "name": "In URL"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"query\": \"nate herk -inurl:skool\",\n  \"limit\": 6\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1904,
+        432
+      ],
+      "id": "6f54b639-6a18-482e-9907-ea84684daec7",
+      "name": "Exclusion"
+    },
+    {
+      "parameters": {
+        "content": "# 🔥 Firecrawl /search Query Operators\n\nUse these operators to fine-tune your search queries when using Firecrawl’s search endpoint.\n\n**`\"\"` — Exact Phrase (Non-Fuzzy Match)**  \nReturns results that match the exact phrase as written (no typos, rewordings, or approximations).  \n**Example:** `\"Nate Herk\"`\n\n\n**`-` — Exclude Terms**  \nExcludes certain keywords or domains from results.  \n**Example:** `-consulting`, `-site:linkedin.com`\n\n\n**`site:` — Search Within a Specific Website**  \nLimits results to a specific domain.  \n**Example:** `site:youtube.com`, `site:truehorizonai.com`\n\n\n**`inurl:` — Word Appears in URL**  \nOnly returns results where the keyword appears in the URL.  \n**Example:** `inurl:skool`\n\n\n**`allinurl:` — All Words Appear in URL**  \nOnly returns results where all specified words appear in the URL.  \n**Example:** `allinurl:ai automation nateherk`\n\n\n**`intitle:` — Word Appears in Page Title**  \nReturns pages that include the keyword in the page title.  \n**Example:** `intitle:TrueHorizon AI`\n\n\n**`allintitle:` — All Words Appear in Page Title**  \nOnly returns pages where all specified words appear in the title.  \n**Example:** `allintitle:Nate Herk YouTube automation`\n\n\n**`related:` — Related Domains**  \nReturns websites related to a given domain.  \n**Example:** `related:truehorizonai.com`\n\n\n💡 **Pro Tip:** Combine multiple operators for powerful filtering, like:  \n`\"Nate Herk\" site:youtube.com -shorts intitle:automation`\n",
+        "height": 860,
+        "width": 680
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        368
+      ],
+      "id": "e69a0af2-be42-4ed9-b334-69df76770467",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"query\": \"Nate Herk site:youtube.com -shorts intitle:automation\",\n  \"limit\": 5\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1904,
+        640
+      ],
+      "id": "41ee2c88-d3dc-45bf-b1c4-6c668ec11c33",
+      "name": "Pro"
+    },
+    {
+      "parameters": {
+        "content": "## Within a Specific Website",
+        "height": 200,
+        "width": 340,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        368
+      ],
+      "id": "94eb4332-1d08-40eb-b858-182f072ef625",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Word Appears in URL",
+        "height": 200,
+        "width": 340,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        592
+      ],
+      "id": "7135abe6-2bd6-4044-b8bb-71fd67e4184f",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Exclude Terms\n",
+        "height": 200,
+        "width": 340,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1792,
+        368
+      ],
+      "id": "4f188d19-a82f-4af3-9fa3-e9542dd33785",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Pro Tip",
+        "height": 200,
+        "width": 340,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1792,
+        592
+      ],
+      "id": "79b5db3a-3b6d-4c5e-8ef2-2c76c16dc3b8",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "# 🔧 Firecrawl /search Body Parameters\n\nThese parameters help you control the type, scope, and format of results returned from Firecrawl’s `/search` endpoint.\n\n**`query`** *(string, required)*  \nThe actual search string — supports query operators like `site:`, `intitle:`, etc.  \n💡 Example: `\"Nate Herk\" site:youtube.com`\n\n**`limit`** *(integer, default: 5)*  \nMaximum number of results to return (range: 1–100).  \n💡 Example: `limit: 10`\n\n**`tbs`** *(string)*  \nTime-based search filtering (e.g., recent content).  \n💡 Example: `\"qdr:d\"` for results from the past day\n\n**`lang`** *(string, default: `en`)*  \nLanguage code for search results.  \n💡 Example: `lang: \"en\"` or `lang: \"es\"`\n\n**`country`** *(string, default: `us`)*  \nCountry code to bias results to a region.  \n💡 Example: `country: \"de\"` for Germany\n\n**`location`** *(string)*  \nMore specific location targeting for localized results.  \n💡 Example: `location: \"new york\"`\n\n**`timeout`** *(integer, default: `60000`)*  \nTimeout for the request in milliseconds.  \n💡 Example: `timeout: 30000` (30 seconds)\n\n**`ignoreInvalidURLs`** *(boolean, default: `false`)*  \nIf `true`, filters out search results with invalid or unusable URLs (great for chaining with other Firecrawl endpoints).  \n💡 Example: `ignoreInvalidURLs: true`\n\n**`scrapeOptions`** *(object)*  \nControls the scraping behavior for each result, letting you specify which formats to return.\n\nAvailable formats (you can include multiple):\n- `markdown`\n- `html`\n- `rawHtml`\n- `links`\n- `screenshot`\n- `screenshot@fullPage`\n- `json`\n\n💡 Example:\n\n\"scrapeOptions\": {\n  \"formats\": [\"markdown\", \"links\", \"screenshot\"]\n}\n\n💡 Tip: Combine these parameters with query operators to get super targeted, fast, and relevant full-page content.\n",
+        "height": 1220,
+        "width": 700,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        704,
+        0
+      ],
+      "id": "7c70f6dc-4bab-4230-867f-7071b65b93ef",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "# 🚀 Quick Setup Guide\nStart using the Firecrawl `/search` endpoint to pull relevant, structured data from across the web — perfect for AI Agents, lead scraping, research, and more.\n\n🔗 **API Documentation:**  \n[FireCrawl Search Endpoint →](https://docs.firecrawl.dev/api-reference/endpoint/search)\n\n👨‍🏫 **Created by:** [Nate Herk](https://www.youtube.com/@nateherk)\n\n\n## 🎁 **Discount Code:**  \n## Use **`HERK10`** for **10% off** your [Firecrawl](https://firecrawl.link/nateherk) subscription for a full year.\n\n",
+        "height": 340,
+        "width": 680
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f8d5e2f3-84cd-457d-af1e-6e8029b2c8a9",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        80
+      ],
+      "id": "0c44fc67-33b0-49d8-a83b-a5d834890d8d",
+      "name": "When chat message received",
+      "webhookId": "5634d633-9287-41c9-ab57-bea1816b3b0a"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1632,
+        224
+      ],
+      "id": "22b85490-a835-4e02-813b-ab2ff9bbba60",
+      "name": "GPT 4.1 mini"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Use this tool to search the internet",
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"query\": \"{{$fromAI(\"searchQuery\")}}\",\n  \"limit\": {{$fromAI(\"limit\",\"the number of search results requested\", number)}},\n  \"scrapeOptions\": {\n  \"formats\": [\"markdown\", \"screenshot@fullPage\"]}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        208
+      ],
+      "id": "3cb4d211-2c95-4fa3-9d68-fd80c4a67916",
+      "name": "Firecrawl Search"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=# Overview\nYou are a Firecrawl Search Query Generator Agent.\n\nYou have access to a tool called FireCrawl Search.\n\nYour job is to:\n1. Convert natural language instructions into a properly formatted Firecrawl query string using supported operators.\n2. Send that query — along with a `limit` parameter — to the **FireCrawl Search** tool.\n\n## Query Construction Rules:\n\nUse the following rules to transform user input:\n\n- If the user specifies an exact phrase  \n  → `Nate Herk`\n\n- To exclude terms or domains, prefix them with `-`  \n  → `-linkedin`, `-site:facebook.com`\n\n- If the user wants to search within a specific site, use `site:`  \n  → `site:youtube.com`\n\n- If the user wants a word in the URL, use `inurl:`  \n  → `inurl:nateherk`\n\n- If the user wants multiple words in the URL, use `allinurl:`  \n  → `allinurl:nate herk agent`\n\n- If the user wants a word in the title of the page, use `intitle:`  \n  → `intitle:automation`\n\n- If the user wants multiple words in the title, use `allintitle:`  \n  → `allintitle:ai agent tutorial`\n\n- If the user wants results related to a domain, use `related:`  \n  → `related:truehorizonai.com`\n\n\n## Tool Usage Instructions:\n\nAlways call the **FireCrawls Search** tool with:\n- `query`: the final constructed query string  \n- `limit`: the number of results the user requested\n\nIf the user does **not specify a limit**, default to:  \n→ `limit: 5`\n\n## Output\n\nAlways return all of the important information for each item that the tool gives you. The the title, the URL, the results, etc. \n\nFor each 'data' object that is returned in the results, output every field that lives in that object.\n\n## Examples:\n\n**Input:** Search the internet for Nate Herk  \n**Action:** Call FireCrawls Search with:  \n```json\n{\n  \"query\": Nate Herk,\n  \"limit\": 5\n}\n```\n\n**Input:** Find pages with AI agent in the title from YouTube, show me 10  \n**Action:**  \n```json\n{\n  \"query\": intitle:AI agent site:youtube.com,\n  \"limit\": 10\n}\n```\n\n**Input:** Show me results that mention Nate Herk but exclude LinkedIn  \n**Action:**  \n```json\n{\n  \"query\": Nate Herk -site:linkedin.com,\n  \"limit\": 5\n}\n```\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        80
+      ],
+      "id": "90049c90-5371-42f7-b2f4-308c057e0398",
+      "name": "Search Agent"
+    },
+    {
+      "parameters": {
+        "content": "## Firecrawl Agent",
+        "height": 340,
+        "width": 700,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        0
+      ],
+      "id": "ed4179a2-126e-4867-9ea0-dee4aa9bc540",
+      "name": "Sticky Note8"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Search Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT 4.1 mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Search Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firecrawl Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "Search Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4236f9bd-755a-44d8-9dab-5c16c4131233",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a8f82fabd6c506070258ba0e5756d77a89c1fbe32440ca12ebbacc2589274770"
+  },
+  "id": "jyldRwwVNOr3Imbj",
+  "tags": [
+    {
+      "updatedAt": "2026-01-18T13:02:40.606Z",
+      "createdAt": "2026-01-18T13:02:40.606Z",
+      "id": "aT9MhRhHp6VA8SCg",
+      "name": "scrapper"
+    },
+    {
+      "updatedAt": "2026-01-18T13:02:34.215Z",
+      "createdAt": "2026-01-18T13:02:34.215Z",
+      "id": "NmczeV0vl1Y2q9te",
+      "name": "firecrawl"
+    },
+    {
+      "updatedAt": "2026-01-17T09:19:49.906Z",
+      "createdAt": "2026-01-17T09:19:49.906Z",
+      "id": "Idhwbw6NqF6tmzZQ",
+      "name": "free workflow"
+    }
+  ]
+}
