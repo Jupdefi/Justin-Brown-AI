@@ -136,7 +136,7 @@
     },
     {
       "parameters": {
-        "content": "# Workflow Builder\n",
+        "content": "# Workflow Builder\n\nThis section converts your request into valid n8n JSON and creates the workflow automatically.\n",
         "height": 340,
         "width": 1280,
         "color": 2
@@ -165,7 +165,7 @@
     },
     {
       "parameters": {
-        "content": "# n8n Developer Agent\n",
+        "content": "# n8n Developer Agent\n\nDescribe any automation and this AI will build it for you!\n",
         "height": 280,
         "width": 660,
         "color": 4
@@ -278,7 +278,7 @@
     },
     {
       "parameters": {
-        "content": "# 🛠️ Setup Guide  \n\nFollow the steps below to get this workflow up and running:\n\n### MY RECOMMENDATION\nHook up the chat trigger directly to the workflow builder workflow instead of the \"When executed by another workflow\" trigger. This will make testing easier and keep everything in one execution. \n\nIf you want to take the multi-agent approach, then follow the below instructions. \n\n### ✅ Step 1: Connect Your [OpenRouter](https://openrouter.ai/) API Key  \nThis powers the main LLM agent. Make sure your key is active and added via the HTTP Request or Credential node.\n\n### ✅ Step 2: Add Your [Anthropic](https://console.anthropic.com/dashboard) API Key (Optional)  \nIf you want to enable thinking using Claude Opus 4, connect your Anthropic API key.\n\n### ✅ Step 3: Link the Developer Tool  \nMake sure the node or sub-workflow responsible for building the JSON is properly connected to the main agent. The developer tool should return a structured workflow JSON back to the main flow.\n\n### ✅ Step 4: Add Your n8n API Key  \nCreate your **n8n API credential** and connect it in the credential section. This is what allows the agent to spin up new workflows automatically in your instance.\n\n### ✅ Step 5: Copy the [Google Doc](https://docs.google.com/document/d/1TiRusVo4DbbANwAr7I0GUGDZY3pmEmHZy3k66mRxLCg/edit?usp=sharing)  \nMake a copy in your own Google Suite so you can edit, test, and reference it inside the Google Drive node. Then make sure to connect your Google credentials.\n\n### 🧪 Final Step: Start Testing  \nOnce all connections are made, start prompting the agent and watch it build n8n workflows on demand.\n",
+        "content": "# 🛠️ Setup Guide\n\n## Quick Start Option\nConnect the Chat Trigger directly to the Workflow Builder for simpler testing.\n\n---\n\n## Full Setup\n\n### Step 1: OpenRouter API\nGet your key at [openrouter.ai](https://openrouter.ai/) and add it to credentials.\n\n### Step 2: Anthropic API (Optional)\nFor Claude Opus 4 thinking, add key from [console.anthropic.com](https://console.anthropic.com/).\n\n### Step 3: n8n API Key\nCreate in Settings → API. Enables auto workflow creation.\n\n### Step 4: Google Docs\n1. Copy the [template doc](https://docs.google.com/document/d/1TiRusVo4DbbANwAr7I0GUGDZY3pmEmHZy3k66mRxLCg/)\n2. Add Google Drive credentials\n3. Update node with your doc ID\n\n### Step 5: Test It\nOpen the chat and describe a workflow to create!\n\n---\n\n**Tip:** Be specific about triggers, apps, and data flow for best results.",
         "height": 860,
         "width": 720
       },

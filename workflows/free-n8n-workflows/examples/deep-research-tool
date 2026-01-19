@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {
-        "content": "\n# **🚀 Deep Research Tool**  \n\nWelcome to **FREE: Open Deep Research 2.0**! 🎉  \n\nThis workflow was created to **democratize AI-powered research** and make advanced **automated knowledge discovery** available to **everyone**, without **API restrictions** or **cost barriers**.  \n\nHappy researching! 💡",
+        "content": "# 🚀 Deep Research Tool\n\n**FREE AI-Powered Research** - No API keys required!\n\n## How It Works\n1. Enter your research topic in the chat\n2. Jina AI DeepSearch analyzes multiple sources\n3. Get a structured report with insights and sources\n\n## Example Queries\n- \"Latest developments in quantum computing\"\n- \"Impact of AI on healthcare\"\n- \"Renewable energy trends 2025\"\n\n## Tips\n- Be specific with your questions\n- Ask for comparisons or analyses\n- Request specific time periods if needed\n\n**Happy researching!** 💡",
         "height": 760,
         "width": 740,
         "color": 6
@@ -19,7 +19,7 @@
     },
     {
       "parameters": {
-        "content": "## 🚀 **FREE: Open Deep Research 2.0**  \nFully automated **AI-powered research workflow** using **Jina AI’s DeepSearch** to generate structured, fact-based reports—**no API key required!**  ",
+        "content": "## Research Pipeline\n\nThis section sends your query to Jina AI and formats the response.\n\n**Nodes:**\n- Chat Trigger → Receives your question\n- HTTP Request → Calls Jina DeepSearch API\n- Code Node → Formats the Markdown output",
         "height": 300,
         "width": 740
       },
@@ -34,7 +34,7 @@
     },
     {
       "parameters": {
-        "content": "## 🧠 **How This Workflow Works**  \n\nThis workflow automates **deep research and report generation** using **Jina AI's DeepSearch API**, making **advanced knowledge discovery accessible for free**.  \n\n1️⃣ **User Input → AI Research**  \n- A user **enters a research query** via chat.  \n- The workflow **sends the query** to **Jina AI’s DeepSearch API** for **in-depth analysis**.  \n\n2️⃣ **AI-Powered Insights**  \n- DeepSearch **retrieves** and **analyzes** relevant information.  \n- The response includes **key insights, structured analysis, and sources**.  \n\n3️⃣ **Markdown Formatting & Cleanup**  \n- The response **passes through a Code Node** that extracts, cleans, and **formats** the AI-generated insights into **readable Markdown output**.  \n- URLs are properly formatted, footnotes are structured, and the report is easy to read.  \n\n4️⃣ **Final Output**  \n- The final, **well-structured research report** is ready for use, **fully automated and free of charge!**  ",
+        "content": "## How It Works\n\n**1. Input** → Enter your research question\n\n**2. AI Research** → Jina DeepSearch analyzes multiple sources\n\n**3. Format** → Code node cleans and structures the response\n\n**4. Output** → Receive a Markdown report with citations\n\n---\n\n**Customization:**\nEdit `reasoning_effort` in the HTTP node:\n- `low` = Quick results\n- `medium` = Balanced\n- `high` = Thorough analysis",
         "height": 440,
         "width": 740
       },

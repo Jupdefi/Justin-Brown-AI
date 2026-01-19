@@ -767,7 +767,7 @@
     },
     {
       "parameters": {
-        "content": "# 🛠️ Setup Guide  \n\nFollow these steps to get the workflow up and running:\n\n### ✅ Step 1: Get Your [KIE API Key](https://kie.ai)  \nHead to [kie.ai](https://kie.ai) and grab your API key. Then, plug this key into all HTTP Request nodes that point to **kie.ai**.\n\n### ✅ Step 2: Get Your [IMGBB API Key](https://imgbb.com/)  \nVisit [imgbb.com](https://imgbb.com/) to generate your API key. Add this key to the HTTP Request that hits the Git image URL endpoint.\n\n### 🎯 Final Step: Experiment & Refine  \nStart testing different prompts and images. Adjust inputs and refine based on results until you're happy with the workflow's output.\n",
+        "content": "# 🛠️ Setup Guide\n\n## Required API Keys\n\n### KIE.ai (Image Generation)\n1. Sign up at [kie.ai](https://kie.ai)\n2. Get your API key\n3. Add to ALL KIE HTTP nodes: `Bearer YOUR_KEY`\n\n### IMGBB (Image Hosting)\n1. Sign up at [imgbb.com](https://imgbb.com/)\n2. Get your API key\n3. Add to the image upload node\n\n## Three Modes Available\n\n**Text to Image:** Describe what you want\n**Image to Image:** Transform existing images\n**Multi-Image:** Combine multiple images\n\n## Tips\n- Be specific in prompts\n- Higher resolution = longer wait\n- Check status for progress",
         "height": 464,
         "width": 608
       },

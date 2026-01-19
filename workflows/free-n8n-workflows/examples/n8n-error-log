@@ -127,7 +127,7 @@
     },
     {
       "parameters": {
-        "content": "# Error Logger",
+        "content": "# Error Logger\n\nCaptures errors from all workflows and logs to Google Sheets + Slack.\n\n**What gets logged:**\n- Timestamp\n- Workflow name\n- Failed node\n- Error message\n- Execution link",
         "height": 580,
         "width": 740,
         "color": 5
@@ -143,7 +143,7 @@
     },
     {
       "parameters": {
-        "content": "# 🛠️ Setup Guide  \n\n---\n### 1️⃣ Link This as Your Error Workflow  \n- Go to **Settings** → **Error Workflow** → Select this workflow as your global error handler.\n- The parent workflow must be active.\n---\n\n#### 2️⃣ Error Logger (Google Sheets)  \n🔗 **[Make a copy of the template](https://docs.google.com/spreadsheets/d/1Aiz1cpv1k6Qlmp1Cjmj0ZtNuG6fC_cG24O_XaiP8NOs/edit?usp=sharing)**  \n- Set up your Google Sheets credentials  \n- Connect your Google credential  \n- Customize the sheet as needed (optional)\n---\n\n#### 3️⃣ Slack Notifications (Optional)  \n- Connect your Slack credential in the Slack node  \n- Choose a channel or user to send error alerts to\n",
+        "content": "# 🛠️ Setup Guide\n\n## Step 1: Set as Error Workflow\nGo to **Settings → Error Workflow** and select this workflow.\n\n## Step 2: Google Sheets\n1. [Copy the template](https://docs.google.com/spreadsheets/d/1Aiz1cpv1k6Qlmp1Cjmj0ZtNuG6fC_cG24O_XaiP8NOs/)\n2. Add Google Sheets credentials\n3. Update the node with your sheet ID\n\n## Step 3: Slack (Optional)\n1. Add Slack OAuth credentials\n2. Update channel ID in the Slack node\n\n---\n\n**Important:** This workflow must be **ACTIVE** to catch errors!",
         "height": 580,
         "width": 600
       },
