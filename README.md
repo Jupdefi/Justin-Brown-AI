@@ -2,10 +2,16 @@
 
 Welcome to my personal AI community repository! A place to share open source AI projects, free n8n workflows, and automation resources with the community.
 
-## What's Inside
+https://www.instagram.com/justin_brown_ai?igsh=Z2RzaGZtaWQ0ZjNi&utm_source=qr
+https://www.tiktok.com/@justin_brown_ai
+https://youtube.com/@justin-brown-ai?si=y_3dr_WyQgkowreg
+https://www.linkedin.com/in/justin-brown-ai?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app
 
-### [Free n8n Workflows](./workflows/free-n8n-workflows/)
-Ready-to-use n8n workflow templates that you can import directly into your n8n instance. Automate your work with pre-built solutions for common tasks.
+
+## What's Inside?
+
+### [10 Free n8n Workflows](./workflows/free-n8n-workflows/)
+Ready-to-use n8n workflow templates that you can import directly into your n8n instance. Automate your work with pre-built solutions for common tasks. 
 
 ### [Open Source AI Projects](./projects/open-source-ai/)
 Curated collection of open source AI tools, integrations, and tutorials. From LLM integrations to computer vision projects.
