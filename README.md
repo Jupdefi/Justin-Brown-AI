@@ -3,8 +3,11 @@
 Welcome to my personal AI community repository! A place to share open source AI projects, free n8n workflows, and automation resources with the community.
 
 https://www.instagram.com/justin_brown_ai?igsh=Z2RzaGZtaWQ0ZjNi&utm_source=qr
+
 https://www.tiktok.com/@justin_brown_ai
+
 https://youtube.com/@justin-brown-ai?si=y_3dr_WyQgkowreg
+
 https://www.linkedin.com/in/justin-brown-ai?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app
 
 
