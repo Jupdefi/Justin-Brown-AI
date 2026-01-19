@@ -1,0 +1,144 @@
+{
+  "name": "Deep research tool",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "\n# **🚀 Developed by Leonard van Hemert**  \n\nThank you for using **FREE: Open Deep Research 2.0**! 🎉  \n\nThis workflow was created to **democratize AI-powered research** and make advanced **automated knowledge discovery** available to **everyone**, without **API restrictions** or **cost barriers**.  \n\nIf you find this useful, feel free to **connect with me on LinkedIn** and stay updated on my latest AI & automation projects!  \n\n🔗 **Follow me on LinkedIn**: [Leonard van Hemert](https://www.linkedin.com/in/leonard-van-hemert/)  \n\nI truly appreciate the support from the **n8n community**, and I can’t wait to see how you use and improve this workflow! 🚀  \n\nHappy researching,  \n**Leonard van Hemert** 💡",
+        "height": 760,
+        "width": 740,
+        "color": 6
+      },
+      "id": "5dc7f977-24c2-4359-8ec1-d358beee5290",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🚀 **FREE: Open Deep Research 2.0**  \nFully automated **AI-powered research workflow** using **Jina AI’s DeepSearch** to generate structured, fact-based reports—**no API key required!**  ",
+        "height": 300,
+        "width": 740
+      },
+      "id": "8238268f-bcef-4093-9a77-c955bf7bc953",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        768,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🧠 **How This Workflow Works**  \n\nThis workflow automates **deep research and report generation** using **Jina AI's DeepSearch API**, making **advanced knowledge discovery accessible for free**.  \n\n1️⃣ **User Input → AI Research**  \n- A user **enters a research query** via chat.  \n- The workflow **sends the query** to **Jina AI’s DeepSearch API** for **in-depth analysis**.  \n\n2️⃣ **AI-Powered Insights**  \n- DeepSearch **retrieves** and **analyzes** relevant information.  \n- The response includes **key insights, structured analysis, and sources**.  \n\n3️⃣ **Markdown Formatting & Cleanup**  \n- The response **passes through a Code Node** that extracts, cleans, and **formats** the AI-generated insights into **readable Markdown output**.  \n- URLs are properly formatted, footnotes are structured, and the report is easy to read.  \n\n4️⃣ **Final Output**  \n- The final, **well-structured research report** is ready for use, **fully automated and free of charge!**  ",
+        "height": 440,
+        "width": 740
+      },
+      "id": "3e446ee2-7fae-4599-a9a0-179ffa6c1cd2",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        768,
+        320
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://deepsearch.jina.ai/v1/chat/completions",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"jina-deepsearch-v1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"You are an advanced AI researcher that provides precise, well-structured, and insightful reports based on deep analysis. Your responses are factual, concise, and highly relevant.\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"Hi, how can I help you?\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Provide a deep and insightful analysis on: \\\"{{ $json.chatInput }}\\\". Ensure the response is well-structured, fact-based, and directly relevant to the topic, with no unnecessary information.\"\n    }\n  ],\n  \"stream\": true,\n  \"reasoning_effort\": \"low\"\n}",
+        "options": {}
+      },
+      "id": "85a7cb45-2fe5-49e7-97ff-3c5894c0b249",
+      "name": "Jina AI DeepSearch Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1040,
+        144
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3e2fa87d-b1e0-485c-bb4e-910b9feea52b",
+      "name": "User Research Query Input",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        832,
+        144
+      ],
+      "webhookId": "8a4b05af-cd63-4692-9924-e35aaed5f077",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "jsCode": "function extractAndFormatMarkdown(input) {\n    let extractedContent = [];\n\n    // Extract raw data string from n8n input\n    let rawData = input.first().json.data;\n\n    // Split into individual JSON strings\n    let jsonStrings = rawData.split(\"\\n\\ndata: \").map(s => s.replace(/^data: /, ''));\n\n    let lastContent = \"\";\n    \n    // Reverse loop to find the last \"content\" field\n    for (let i = jsonStrings.length - 1; i >= 0; i--) {\n        try {\n            let parsedChunk = JSON.parse(jsonStrings[i]);\n\n            if (parsedChunk.choices && parsedChunk.choices.length > 0) {\n                for (let j = parsedChunk.choices.length - 1; j >= 0; j--) {\n                    let choice = parsedChunk.choices[j];\n\n                    if (choice.delta && choice.delta.content) {\n                        lastContent = choice.delta.content.trim();\n                        break;\n                    }\n                }\n            }\n\n            if (lastContent) break; // Stop once the last content is found\n        } catch (error) {\n            console.error(\"Failed to parse JSON string:\", jsonStrings[i], error);\n        }\n    }\n\n    // Clean and format Markdown\n    lastContent = lastContent.replace(/\\[\\^(\\d+)\\]: (.*?)\\n/g, \"[$1]: $2\\n\");  // Format footnotes\n    lastContent = lastContent.replace(/\\[\\^(\\d+)\\]/g, \"[^$1]\");  // Inline footnotes\n    lastContent = lastContent.replace(/(https?:\\/\\/[^\\s]+)(?=[^]]*\\])/g, \"<$1>\");  // Format links\n\n    // Return formatted content as an array of objects (n8n expects this format)\n    return [{ text: lastContent.trim() }];\n}\n\n// Execute function and return formatted output\nreturn extractAndFormatMarkdown($input);\n"
+      },
+      "id": "d0af5de2-f123-49d1-ad5a-c122c43ccc33",
+      "name": "Format & Clean AI Response",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1264,
+        144
+      ],
+      "typeVersion": 2
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "User Research Query Input": {
+      "main": [
+        [
+          {
+            "node": "Jina AI DeepSearch Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jina AI DeepSearch Request": {
+      "main": [
+        [
+          {
+            "node": "Format & Clean AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bdcc40da-b9a7-4d43-8de2-f74012aaddcd",
+  "meta": {
+    "instanceId": "a8f82fabd6c506070258ba0e5756d77a89c1fbe32440ca12ebbacc2589274770"
+  },
+  "id": "E8udF2lrlsZI5YPZ",
+  "tags": [
+    {
+      "updatedAt": "2026-01-17T09:19:49.906Z",
+      "createdAt": "2026-01-17T09:19:49.906Z",
+      "id": "Idhwbw6NqF6tmzZQ",
+      "name": "free workflow"
+    },
+    {
+      "updatedAt": "2026-01-17T09:42:15.106Z",
+      "createdAt": "2026-01-17T09:42:15.106Z",
+      "id": "bpEcG7BHUEzcCIRn",
+      "name": "deep research"
+    }
+  ]
+}
